@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation</title>
+</head>
+<body>
+    <h5 style="color:  #265073;  margin-top: 2%;">Date and Time: <span id="datetime"></span></h5>
+   
+  <form id="myForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <span id="nameError" style="color: red;"></span><br><br>
+
+    <label for="age">Age:</label>
+    <input type="text" id="age" name="age">
+    <span id="ageError" style="color: red;"></span><br><br>
+
+    <label>Gender:</label>
+    <input type="radio" id="male" name="gender" value="male"> Male
+    <input type="radio" id="female" name="gender" value="female"> Female
+    <span id="genderError" style="color: red;"></span><br><br>
+
+    <label>Games:</label><br>
+    <input type="checkbox" id="game1" name="game" value="20"> Game 1 - $20<br>
+    <input type="checkbox" id="game2" name="game" value="30"> Game 2 - $30<br>
+    <input type="checkbox" id="game3" name="game" value="40"> Game 3 - $40
+    <span id="gamesError" style="color: red;"></span><br><br>
+     
+    <button type="button" onclick="alrte()">Submit</button>
+  </form>
+
+  <textarea id="correctInputs" rows="5" cols="50" readonly></textarea>
+
+  <script>
+    function alrte(){
+     var totalPrice = 0;
+      var selectedGames = [];
+      for (var i = 0; i < games.length; i++) {
+        if (games[i].checked) {
+          totalPrice += parseInt(games[i].value);
+          selectedGames.push(games[i].id);
+        }
+    window.alert(totalPrice);
+    }
+
+    }
+
+    
+    function validateForm() {
+      var name = document.getElementById("name").value;
+      var age = document.getElementById("age").value;
+      var gender = document.querySelector('input[name="gender"]:checked');
+      var games = document.getElementsByName("game");
+      var errorMessage = "";
+
+      // Validate name
+      if (name === "") {
+        errorMessage += "Name is required.<br>";
+        document.getElementById("nameError").innerHTML = "Name is required.";
+      } else {
+        document.getElementById("nameError").innerHTML = "";
+      }
+
+      // Validate age
+      if (age === "" || isNaN(age)||age<0) {
+        errorMessage += "Age must be a number.<br>";
+        document.getElementById("ageError").innerHTML = "Age must be a number.";
+      } else {
+        document.getElementById("ageError").innerHTML = "";
+      }
+
+      // Validate gender
+      if (!gender) {
+        errorMessage += "Gender is required.<br>";
+        document.getElementById("genderError").innerHTML = "Gender is required.";
+      } else {
+        document.getElementById("genderError").innerHTML = "";
+      }
+
+      // Validate games
+      var totalPrice = 0;
+      var selectedGames = [];
+      for (var i = 0; i < games.length; i++) {
+        if (games[i].checked) {
+          totalPrice += parseInt(games[i].value);
+          selectedGames.push(games[i].id);
+        }
+      }
+      if (totalPrice === 0) {
+        errorMessage += "At least one game must be selected.<br>";
+        document.getElementById("gamesError").innerHTML = "At least one game must be selected.";
+      } else {
+        document.getElementById("gamesError").innerHTML = "";
+      }
+
+      // Display error message or correct inputs
+      if (errorMessage !== "") {
+        document.getElementById("correctInputs").value = "";
+        document.getElementById("correctInputs").style.display = "none";
+        document.getElementById("correctInputs").innerHTML = "";
+        
+      } else {
+        var correctInputs = "Name: " + name + "\n";
+        correctInputs += "Age: " + age + "\n";
+        correctInputs += "Gender: " + gender.value + "\n";
+        correctInputs += "Selected Games: " + selectedGames.join(", ") + "\n";
+        correctInputs += "Total Price: $" + totalPrice.toFixed(2) + "\n";
+        document.getElementById("correctInputs").value = correctInputs;
+        document.getElementById("correctInputs").style.display = "block";
+      }
+    }
+    function updateDateTime() {
+        var time = new Date();
+        document.getElementById('datetime').innerHTML = time.toLocaleString();
+      }
+      setInterval(updateDateTime, 1000);
+  </script>
+</body>
+</html>
